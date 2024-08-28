@@ -27,6 +27,7 @@
                 <samp *ngIf="form.get('body')?.errors?.['required']"> El ID Usuario es obligatorio</samp>
                 <samp *ngIf="form.get('body')?.errors?.['minlength']"> Debe ser mayor a 10 caracteres</samp>
 
+
             </div>
         </div>
 
@@ -42,7 +43,9 @@
         <a *ngFor="let post of posts" class="list-group-item list-group-item-action " aria-current="true">
             <h5 class="mb-1">{{post.title}}</h5>
             <p class="mb-1">{{post.body}}</p>
-            <small>{{post.userId}}</small>
+            <!-- <small>{{post.userId}}</small> -->
+            <button type="button" class="btn btn-primary" style="margin-inline: 10px;"(click)="updatePost(post)">Actualizar</button>
+            <button type="button" class="btn btn-danger" style="margin-inline: 10px;"(click)="deletePost(post)">Eliminar</button>
         </a>
 
     </div>

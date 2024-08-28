@@ -1,29 +1,42 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Pokemon } from '../../utils/pokemon';
+import { Pokemon, PokemonResponse } from '../../utils/pokemon';
 import { Router } from '@angular/router';
 import * as pokemonData from '../../../assets/json/pokemonData.json';
+import { PokemonsService } from '../../services/pokemons/pokemons.service';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-pokemos',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pokemos.component.html',
-  styleUrl: './pokemos.component.css'
+  styleUrl: './pokemos.component.css',
 })
 export class PokemosComponent {
-  pokemons: Pokemon[] = (pokemonData as any).default;
-  constructor( private router:Router) {}
+  // pokemons: Pokemon[] = (pokemonData as any).default;
+  pokemon: Pokemon[] = [];
+  pokemonResponse?:PokemonResponse;
+
+  constructor(private router: Router,private pokemonsService:PokemonsService) {}
   ngOnInit(): void {
-    
+
   }
-  onClickButton(): void {
-    console.log(this.pokemons);
-    
-  } 
+
+  getPokemons():void{
+    this.pokemonsService.getPokemons().subscribe((pokemonResponse)=>{
+      this.pokemonResponse=pokemonResponse;
+      for(const pokemonResult of pokemonResponse.results){
+        this.pokemonsService.getPokemon(pokemonResult.name).subscribe((pokemon)=>{
+          this.pokemon.push(pokemon);
+        });
+      }
+    });
+
+  }
+
+
   onClickPokemon(pokemon: Pokemon): void {
-    this.router.navigate(['/pokemon', pokemon.id]);
+    console.log(this.pokemon);
   }
-
-
 }

@@ -8,6 +8,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { title } from 'process';
 
 @Component({
   selector: 'app-posts',
@@ -41,5 +42,18 @@ export class PostsComponent {
         this.form.reset(post);
       });
     }
+  }
+  updatePost(post:Post):void{
+    const newPost={...post,title:'Titulo Actualizacion'}
+    this.postsService.updatePost(post).subscribe((post)=>{
+      const index=this.posts.findIndex((p)=>p.id === post.id);
+      this.posts[index] = post;
+    });
+
+  }
+  deletePost(post:Post):void{
+    this.postsService.deletePost(post).subscribe(()=>{
+      this.posts.splice(this.posts.indexOf(post),1);
+    })
   }
 }

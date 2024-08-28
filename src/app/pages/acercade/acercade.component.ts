@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { PostsService } from '../../services/posts/posts.service';
+import { PokemonsService } from '../../services/pokemons/pokemons.service';
+
 
 
 @Component({
@@ -10,11 +11,11 @@ import { PostsService } from '../../services/posts/posts.service';
   styleUrl: './acercade.component.css'
 })
 export class AcercadeComponent {
-  contador:number=0;
-  constructor(private postsService:PostsService){}
-  onClick(): void {
-    console.log("click");
-    this.postsService.changePost(`Clicks: ${++this.contador}`);
-  }
+  contador: number = 0;
 
+  constructor(public pokemonsService: PokemonsService) {}
+
+  onClick() {
+    this.pokemonsService.setMensaje(`Clicks: ${++this.contador}`);
+  }
 }

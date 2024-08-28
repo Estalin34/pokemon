@@ -5,4 +5,3 @@ export interface Pokemon {
     peso: number;
     tipo:number;
   }
-  
